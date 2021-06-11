@@ -120,12 +120,12 @@ void setup()
   // input from analog microphones such as the MAX9814 or MAX4466
   // internal analog to digital converter sampling using i2s
   // create our samplers
-  // adcSampler = new ADCSampler(ADC_UNIT_1, ADC1_CHANNEL_7);
+   adcSampler = new ADCSampler(ADC_UNIT_1, ADC1_CHANNEL_7);
 
   // set up the adc sample writer task
-  // TaskHandle_t adcWriterTaskHandle;
-  // xTaskCreatePinnedToCore(adcWriterTask, "ADC Writer Task", 4096, adcSampler, 1, &adcWriterTaskHandle, 1);
-  // adcSampler->start(I2S_NUM_0, adcI2SConfig, 16384, adcWriterTaskHandle);
+  TaskHandle_t adcWriterTaskHandle;
+  xTaskCreatePinnedToCore(adcWriterTask, "ADC Writer Task", 4096, adcSampler, 1, &adcWriterTaskHandle, 1);
+  adcSampler->start(I2S_NUM_0, adcI2SConfig, 16384, adcWriterTaskHandle);
 
   // Direct i2s input from INMP441 or the SPH0645
   i2sSampler = new I2SMEMSSampler(i2sPins, false);
